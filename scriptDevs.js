@@ -359,8 +359,14 @@ function StatusBoxUpdate()
 
       /* overv. */
 
+
+
       dat = data["Temp overview"];
-      if(dat == "HIGH")
+      if(dat == "")
+      {
+        data["Temp overview"] = "-";
+      }
+      else if(dat == "HIGH")
       {
           if(currLang == "ru")
           {
@@ -386,23 +392,34 @@ function StatusBoxUpdate()
       /* errlog */
 
       dat = data["Critical Error Log"];
-      dat = dat.split(":");
-      dat = dat[1];
 
-      if(!dat.includes("OK"))
+      if(dat == "")
       {
-        data["Critical Error Log"]= "<label class=\"badge badge-danger\">"+ dat +  "</label>";
+          data["Critical Error Log"] = "-";
       }
       else
       {
-        data["Critical Error Log"] = dat;
-      }
+        dat = dat.split(":");
+        dat = dat[1];
 
+        if(!dat.includes("OK"))
+        {
+          data["Critical Error Log"]= "<label class=\"badge badge-danger\">"+ dat +  "</label>";
+        }
+        else
+        {
+          data["Critical Error Log"] = dat;
+        }
+      }
 
       /* pc */
       dat = data["Connection with PC"];
 
-      if(dat.includes("FAILED"))
+      if(dat == "")
+      {
+        dat = "-";
+      }
+      else if(dat.includes("FAILED"))
       {
         if(currLang == "en")
         {
